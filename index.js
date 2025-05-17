@@ -13,10 +13,10 @@ function createBot() {
     console.log('Bot spawned!');
     if (login == true) {
       bot.chat('/login password123')
-      login = true;
-      process.env['login'] = true;
     } else {
       bot.chat('/register password123 password123');
+      login = true;
+      process.env['login'] = true;
     }
     await new Promise(resolve => setTimeout(resolve, 2500));
     setInterval(() => {
