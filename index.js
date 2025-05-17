@@ -1,16 +1,23 @@
 const mineflayer = require('mineflayer');
 const keep_alive = require('./keep_alive.js');
 
+let login = false
+
 function createBot() {
   const bot = mineflayer.createBot({
-    host: process.env['host'],
-    username: process.env['username']
+    host: 'Wikleer.aternos.me',
+    username: 'duzegojajca'
   });
 
   bot.on('spawn', () => {
     console.log('Bot spawned!');
-    bot.chat('/register password123 password123');
-    bot.chat('/login password123');
+    if (login == true) {
+      bot.chat('/login password123');
+    }
+    if (login == false) {
+      bot.chat('/register password123 password123');
+      login = true;
+    }
   });
 
   bot.on('end', async () => {
