@@ -1,6 +1,6 @@
 const mineflayer = require('mineflayer');
 const keep_alive = require('./keep_alive.js');
-let login = process.env['login'];
+let login = true;
 function createBot() {
   const bot = mineflayer.createBot({
     host: 'Wikleer.aternos.me',
@@ -11,13 +11,7 @@ function createBot() {
 
   bot.on('spawn', async () => {
     console.log('Bot spawned!');
-    if (login == true) {
-      bot.chat('/login password123')
-    } else {
-      bot.chat('/register password123 password123');
-      login = true;
-      process.env['login'] = true;
-    }
+    bot.chat('/login password123')
     await new Promise(resolve => setTimeout(resolve, 2500));
     setInterval(() => {
       // Random look direction (yaw and pitch)
@@ -30,7 +24,7 @@ function createBot() {
       const dir = directions[Math.floor(Math.random() * directions.length)];
 
       // Random duration (500ms to 3000ms)
-      const duration = 500 + Math.random() * 2500;
+      const duration = 500 + Math.random() * 2000;
 
       console.log(`Walking ${dir} for ${Math.floor(duration)} ms`);
 
@@ -39,12 +33,12 @@ function createBot() {
         bot.setControlState(dir, false);
       }, duration);
 
-    }, 4000); // Repeat every 4 seconds
+    }, 2500); // Repeat every 4 seconds
   });
 
   bot.on('end', async () => {
-    console.log('Bot disconnected. Reconnecting in 10 seconds...');
-    await new Promise(resolve => setTimeout(resolve, 10000));
+    console.log('Bot disconnected. Reconnecting in 1 seconds...');
+    await new Promise(resolve => setTimeout(resolve, 1000));
     createBot(); // Recursively restart bot
   });
 
